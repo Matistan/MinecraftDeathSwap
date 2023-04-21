@@ -10,9 +10,16 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         getServer().getPluginCommand("deathswap").setExecutor(new DeathSwapCommand(this));
         getCommand("deathswap").setTabCompleter(new DeathSwapCompleter());
         new DeathListener(this);
         new DamageListener(this);
+        System.out.println("*********************************************************\n" +
+                "Thank you for using this plugin! <3\n" +
+                "Author: Matistan\n" +
+                "If you enjoy this plugin, please rate it on spigotmc.org:\n" +
+                "https://www.spigotmc.org/resources/death-swap.109401/\n" +
+                "*********************************************************");
     }
 }
