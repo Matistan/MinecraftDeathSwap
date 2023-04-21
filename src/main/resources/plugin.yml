@@ -1,0 +1,10 @@
+name: MinecraftDeathSwap
+version: '${project.version}'
+main: me.matistan05.minecraftdeathswap.Main
+api-version: 1.16
+authors: [Matistan]
+description: Play death swap using this plugin with your friends!
+commands:
+  deathswap:
+    description: set up your game with this command
+    usage: /<command>
