@@ -21,7 +21,7 @@ public class DeathSwapCommand implements CommandExecutor {
     static Objective objective;
     public static int seconds = 0;
     public static int time = 0;
-    public static int round = 0;
+    public static int round = 1;
     private static List<String> teleport = new ArrayList<>();
     public static boolean inGame = false;
     public static List<Boolean> ops = new ArrayList<>();
@@ -76,44 +76,46 @@ public class DeathSwapCommand implements CommandExecutor {
             p.sendMessage(ChatColor.GREEN + "----------------------------------");
             return true;
         }
-        if(args[0].equals("add")) {
-            if(args.length != 2) {
+        if (args[0].equals("add")) {
+            if(args.length < 2) {
                 p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
-                return true;
-            }
-            Player target = Bukkit.getPlayerExact(args[1]);
-            if(target == null) {
-                p.sendMessage(ChatColor.RED + "This player does not exist or he is offline");
-                return true;
-            }
-            if(players.contains(target.getName())) {
-                p.sendMessage(ChatColor.RED + "This player is already in a death swap game!");
                 return true;
             }
             if(inGame) {
                 p.sendMessage(ChatColor.RED + "The game has already started!");
                 return true;
             }
-            players.add(target.getName());
-            p.sendMessage(ChatColor.AQUA + "Successfully added new player " + target.getName() + " to the game!");
+            int count = 0;
+            for(int i = 1; i < args.length; i++) {
+                Player target = Bukkit.getPlayerExact(args[i]);
+                if(target == null || players.contains(target.getName())) {continue;}
+                players.add(target.getName());
+                count++;
+            }
+            if(count > 0) {
+                p.sendMessage(ChatColor.AQUA + "Successfully added " + count + " player" + (count == 1 ? "" : "s") + " to the game!");
+            } else {
+                p.sendMessage(ChatColor.RED + "Could not add " + (args.length == 2 ? "this player!" : "these players!"));
+            }
             return true;
         }
-        if(args[0].equals("remove")) {
-            if(args.length != 2) {
-                p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
+        if (args[0].equals("remove")) {
+            if(args.length < 2) {
+                p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /manhunt help");
                 return true;
             }
-            Player target = Bukkit.getPlayerExact(args[1]);
-            if(target == null) {
-                p.sendMessage(ChatColor.RED + "This player does not exist or he is offline");
-                return true;
-            }
-            if (players.contains(target.getName())) {
+            int count = 0;
+            for(int i = 1; i < args.length; i++) {
+                Player target = Bukkit.getPlayerExact(args[i]);
+                if(target == null || !players.contains(target.getName())) {continue;}
                 players.remove(target.getName());
-                p.sendMessage(ChatColor.AQUA + "Successfully removed " + target.getName() + " from a game");
-                return true;
+                count++;
             }
-            p.sendMessage(ChatColor.RED + "This player is not in your deathswap game");
+            if(count > 0) {
+                p.sendMessage(ChatColor.AQUA + "Successfully removed " + count + " player" + (count == 1 ? "" : "s") + " from the game!");
+            } else {
+                p.sendMessage(ChatColor.RED + "Could not remove " + (args.length == 2 ? "this player!" : "these players!"));
+            }
             return true;
         }
         if(args[0].equals("reset")) {
@@ -192,27 +194,7 @@ public class DeathSwapCommand implements CommandExecutor {
                             break;
                         }
                     }
-                    if((seconds + 10) % time == 0) {
-                        playersTitle(10);
-                    } else if((seconds + 9) % time == 0) {
-                        playersTitle(9);
-                    } else if((seconds + 8) % time == 0) {
-                        playersTitle(8);
-                    } else if((seconds + 7) % time == 0) {
-                        playersTitle(7);
-                    } else if((seconds + 6) % time == 0) {
-                        playersTitle(6);
-                    } else if((seconds + 5) % time == 0) {
-                        playersTitle(5);
-                    } else if((seconds + 4) % time == 0) {
-                        playersTitle(4);
-                    } else if((seconds + 3) % time == 0) {
-                        playersTitle(3);
-                    } else if((seconds + 2) % time == 0) {
-                        playersTitle(2);
-                    } else if((seconds + 1) % time == 0) {
-                        playersTitle(1);
-                    } else if(seconds % time == 0 && seconds != 0) {
+                    if(seconds % time == 0 && seconds != 0) {
                         while(true) {
                             for(int i = 0; i < players.size(); i++) {
                                 while(true) {
@@ -240,6 +222,7 @@ public class DeathSwapCommand implements CommandExecutor {
                             player.sendMessage(ChatColor.DARK_AQUA + "You have been teleported to " + teleport.get(i));
                             player.teleport(location.get(i));
                         }
+                        round++;
                         teleport.clear();
                         location.clear();
                     }
@@ -270,7 +253,7 @@ public class DeathSwapCommand implements CommandExecutor {
                 }
             }
         }
-        round = 0;
+        round = 1;
         seconds = 0;
         ops.clear();
         players.clear();

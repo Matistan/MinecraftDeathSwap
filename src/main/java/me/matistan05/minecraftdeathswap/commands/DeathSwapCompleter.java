@@ -7,7 +7,10 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import static me.matistan05.minecraftdeathswap.commands.DeathSwapCommand.players;
 
 public class DeathSwapCompleter implements TabCompleter {
     @Override
@@ -32,27 +35,34 @@ public class DeathSwapCompleter implements TabCompleter {
             if(startsWith("help", args[0])) {
                 list.add("help");
             }
-            if(startsWith("timer", args[0])) {
-                list.add("timer");
+        } else if(args.length > 1 && (args[0].equals("add") || args[0].equals("remove"))) {
+            List<String> notForTab = new LinkedList<>();
+            for(int i = 1; i < args.length - 1; i++) {
+                Player player = Bukkit.getPlayerExact(args[i]);
+                if(player == null) {continue;}
+                notForTab.add(player.getName());
             }
-            if(startsWith("swaptime", args[0])) {
-                list.add("swaptime");
+            List<Player> tabPlayers = new LinkedList<>();
+            if(args[0].equals("add")) {
+                tabPlayers = new LinkedList<>(Bukkit.getOnlinePlayers());
+                for(String s : players) {
+                    Player player = Bukkit.getPlayerExact(s);
+                    if(player == null) {continue;}
+                    notForTab.add(player.getName());
+                }
+            } else {
+                for(String s : players) {
+                    Player player = Bukkit.getPlayerExact(s);
+                    if(player == null) {continue;}
+                    tabPlayers.add(player);
+                }
             }
-        } else if(args.length == 2) {
-            if(args[0].equals("add") || args[0].equals("remove")) {
-                Player[] players = new Player[Bukkit.getServer().getOnlinePlayers().size()];
-                Bukkit.getOnlinePlayers().toArray(players);
-                for (Player player : players) {
-                    if (startsWith(player.getName(), args[1])) {
-                        list.add(player.getName());
-                    }
-                }
-            } else if(args[0].equals("timer")) {
-                if(startsWith("true", args[1])) {
-                    list.add("true");
-                }
-                if(startsWith("false", args[1])) {
-                    list.add("false");
+            for (String argument : notForTab) {
+                tabPlayers.remove(Bukkit.getPlayerExact(argument));
+            }
+            for (Player player : tabPlayers) {
+                if (startsWith(player.getName(), args[args.length - 1])) {
+                    list.add(player.getName());
                 }
             }
         }

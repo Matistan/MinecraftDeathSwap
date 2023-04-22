@@ -11,14 +11,16 @@ import static me.matistan05.minecraftdeathswap.commands.DeathSwapCommand.inGame;
 import static me.matistan05.minecraftdeathswap.commands.DeathSwapCommand.players;
 
 public class DamageListener implements Listener {
+    Main main;
     public DamageListener(Main main) {
+        this.main = main;
         Bukkit.getPluginManager().registerEvents(this, main);
     }
     @EventHandler
     public void DamageEvent(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player p = (Player) e.getEntity();
-            if(inGame && players.contains(p.getName())) {
+            if(inGame && players.contains(p.getName()) && !main.getConfig().getBoolean("pvpEnabled")) {
                 e.setCancelled(true);
             }
         }
