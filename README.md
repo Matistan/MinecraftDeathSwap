@@ -39,7 +39,7 @@ Death Swap is a mini-game where after 5 minutes every player teleports to someon
 
 ## Configuration Options
 
-Edit the `plugins/MinecraftSharedInventory/config.yml` file to change the following options:
+Edit the `plugins/MinecraftDeathSwap/config.yml` file to change the following options:
 
 | Key                 | Description                                                                 | Type    | recommended                                                   |
 |---------------------|-----------------------------------------------------------------------------|---------|---------------------------------------------------------------|
