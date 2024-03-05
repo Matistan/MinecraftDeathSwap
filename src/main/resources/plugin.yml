@@ -8,3 +8,13 @@ commands:
   deathswap:
     description: set up your game with this command
     usage: /<command>
+permissions:
+  deathswap.deathswap:
+    description: Allows the player to use all /blockshuffle commands
+    children:
+      deathswap.add: true
+      deathswap.remove: true
+      deathswap.start: true
+      deathswap.reset: true
+      deathswap.list: true
+      deathswap.help: true

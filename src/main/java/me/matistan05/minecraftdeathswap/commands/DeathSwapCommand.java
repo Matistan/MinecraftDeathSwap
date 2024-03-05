@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.*;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -22,11 +22,11 @@ public class DeathSwapCommand implements CommandExecutor {
     public static int seconds = 0;
     public static int time = 0;
     public static int round = 1;
-    private static List<String> teleport = new ArrayList<>();
+    private static List<String> teleport = new LinkedList<>();
     public static boolean inGame = false;
-    public static List<Boolean> ops = new ArrayList<>();
-    public static List<Location> location = new ArrayList<>();
-    public static List<String> players = new ArrayList<>();
+    public static List<Boolean> ops = new LinkedList<>();
+    public static List<Location> location = new LinkedList<>();
+    public static List<String> players = new LinkedList<>();
     private static Main main;
     public DeathSwapCommand(Main main) {
         DeathSwapCommand.main = main;
@@ -43,6 +43,10 @@ public class DeathSwapCommand implements CommandExecutor {
             return true;
         }
         if(args[0].equals("help")) {
+            if(!p.hasPermission("deathswap.help") && main.getConfig().getBoolean("usePermissions")) {
+                p.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
             if(args.length != 1)
             {
                 p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
@@ -60,12 +64,16 @@ public class DeathSwapCommand implements CommandExecutor {
             return true;
         }
         if(args[0].equals("list")) {
+            if(!p.hasPermission("deathswap.list") && main.getConfig().getBoolean("usePermissions")) {
+                p.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
             if(args.length != 1)
             {
                 p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
                 return true;
             }
-            if(players.size() == 0) {
+            if(players.isEmpty()) {
                 p.sendMessage(ChatColor.RED + "There is no player in your game!");
                 return true;
             }
@@ -77,6 +85,10 @@ public class DeathSwapCommand implements CommandExecutor {
             return true;
         }
         if (args[0].equals("add")) {
+            if(!p.hasPermission("deathswap.add") && main.getConfig().getBoolean("usePermissions")) {
+                p.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
             if(args.length < 2) {
                 p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
                 return true;
@@ -100,6 +112,10 @@ public class DeathSwapCommand implements CommandExecutor {
             return true;
         }
         if (args[0].equals("remove")) {
+            if(!p.hasPermission("deathswap.remove") && main.getConfig().getBoolean("usePermissions")) {
+                p.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
             if(args.length < 2) {
                 p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /manhunt help");
                 return true;
@@ -119,6 +135,10 @@ public class DeathSwapCommand implements CommandExecutor {
             return true;
         }
         if(args[0].equals("reset")) {
+            if(!p.hasPermission("deathswap.reset") && main.getConfig().getBoolean("usePermissions")) {
+                p.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
             if (args.length != 1) {
                 p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
                 return true;
@@ -128,11 +148,15 @@ public class DeathSwapCommand implements CommandExecutor {
             return true;
         }
         if(args[0].equals("start")) {
+            if(!p.hasPermission("deathswap.start") && main.getConfig().getBoolean("usePermissions")) {
+                p.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
+                return true;
+            }
             if (args.length != 1) {
                 p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
                 return true;
             }
-            if (players.size() == 0) {
+            if (players.isEmpty()) {
                 p.sendMessage(ChatColor.RED + "There are no players in your game!");
                 return true;
             }

@@ -37,6 +37,20 @@ Death Swap is a mini-game where after 5 minutes every player teleports to someon
 - `/deathswap list` - shows a list of players in a death swap game
 - `/deathswap help` - shows a list of death swap commands
 
+## Permissions
+
+If `usePermissions` is set to `true` in the `config.yml` file, players without ops will need the following permissions to use the commands:
+
+| Permission          | Description                                               |
+|---------------------|-----------------------------------------------------------|
+| deathswap.deathswap | Allows the player to use all `/deathswap` commands.       |
+| deathswap.add       | Allows the player to use the `/deathswap add` command.    |
+| deathswap.remove    | Allows the player to use the `/deathswap remove` command. |
+| deathswap.start     | Allows the player to use the `/deathswap start` command.  |
+| deathswap.reset     | Allows the player to use the `/deathswap reset` command.  |
+| deathswap.list      | Allows the player to use the `/deathswap list` command.   |
+| deathswap.help      | Allows the player to use the `/deathswap help` command.   |
+
 ### Bugs & Issues
 
 > **Having issues?** Feel free to report them on the [Issues tab](https://github.com/Matistan/MinecraftDeathSwap/issues). I'll be glad to hear your opinion about the plugin as well as extra features you would like me to add!
