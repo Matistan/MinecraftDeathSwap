@@ -54,8 +54,8 @@ public class DeathSwapCommand implements CommandExecutor {
             }
             p.sendMessage(ChatColor.GREEN + "------- " + ChatColor.WHITE + " Minecraft Death Swap " + ChatColor.GREEN + "----------");
             p.sendMessage(ChatColor.BLUE + "Here is a list of death swap commands:");
-            p.sendMessage(ChatColor.YELLOW + "/deathswap add <player name>" + ChatColor.AQUA + "- adds a player to a death swap game");
-            p.sendMessage(ChatColor.YELLOW + "/deathswap remove <player name> " + ChatColor.AQUA + "- removes a player from you death swap game");
+            p.sendMessage(ChatColor.YELLOW + "/deathswap add <player> <player> ... " + ChatColor.AQUA + "- adds players to a blockshuffle game");
+            p.sendMessage(ChatColor.YELLOW + "/deathswap remove <player> <player> ... " + ChatColor.AQUA + "- removes players from your death swap game");
             p.sendMessage(ChatColor.YELLOW + "/deathswap start " + ChatColor.AQUA + "- starts a death swap game");
             p.sendMessage(ChatColor.YELLOW + "/deathswap reset " + ChatColor.AQUA + "- deletes a death swap game");
             p.sendMessage(ChatColor.YELLOW + "/deathswap list " + ChatColor.AQUA + "- shows a list of players in death swap game");

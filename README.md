@@ -30,8 +30,8 @@ Death Swap is a mini-game where after 5 minutes every player teleports to someon
 
 ## Commands
 
-- `/deathswap add <player> ` - adds a player
-- `/deathswap remove <player> ` - removes a player
+- `/deathswap add <player> <player> ... ` - adds players
+- `/deathswap remove <player> <player> ... ` - removes players
 - `/deathswap start` - starts a game
 - `/deathswap reset` - resets a game
 - `/deathswap list` - shows a list of players in a death swap game
