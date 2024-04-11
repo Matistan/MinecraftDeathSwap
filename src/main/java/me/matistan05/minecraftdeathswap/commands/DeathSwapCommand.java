@@ -33,11 +33,7 @@ public class DeathSwapCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            return true;
-        }
-        Player p = (Player) sender;
+    public boolean onCommand(CommandSender p, Command cmd, String label, String[] args) {
         if(args.length == 0) {
             p.sendMessage(ChatColor.RED + "You must type an argument. For help, type: /deathswap help");
             return true;
@@ -98,6 +94,23 @@ public class DeathSwapCommand implements CommandExecutor {
                 return true;
             }
             int count = 0;
+            if (args[1].equals("@a")) {
+                if (args.length != 2) {
+                    p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
+                    return true;
+                }
+                for(Player target : Bukkit.getOnlinePlayers()) {
+                    if(players.contains(target.getName())) continue;
+                    players.add(target.getName());
+                    count++;
+                }
+                if (count > 0) {
+                    p.sendMessage(ChatColor.AQUA + "Successfully added " + count + " player" + (count == 1 ? "" : "s") + " to the game!");
+                } else {
+                    p.sendMessage(ChatColor.RED + "No player was added!");
+                }
+                return true;
+            }
             for(int i = 1; i < args.length; i++) {
                 Player target = Bukkit.getPlayerExact(args[i]);
                 if(target == null || players.contains(target.getName())) {continue;}
@@ -117,13 +130,40 @@ public class DeathSwapCommand implements CommandExecutor {
                 return true;
             }
             if(args.length < 2) {
-                p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /manhunt help");
+                p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
                 return true;
             }
             int count = 0;
+            if (args[1].equals("@a")) {
+                if (args.length != 2) {
+                    p.sendMessage(ChatColor.RED + "Wrong usage of this command. For help, type: /deathswap help");
+                    return true;
+                }
+                for(Player target : Bukkit.getOnlinePlayers()) {
+                    if(!players.contains(target.getName()) ||
+                            (inGame && players.contains(target.getName()) && players.size() == 2)) continue;
+                    if (inGame && main.getConfig().getBoolean("scoreboard")) {
+                        objective.setDisplaySlot(null);
+                        target.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+                    }
+                    players.remove(target.getName());
+                    count++;
+                }
+                if (count > 0) {
+                    p.sendMessage(ChatColor.AQUA + "Successfully removed " + count + " player" + (count == 1 ? "" : "s") + " from the game!");
+                } else {
+                    p.sendMessage(ChatColor.RED + "No player was removed!");
+                }
+                return true;
+            }
             for(int i = 1; i < args.length; i++) {
                 Player target = Bukkit.getPlayerExact(args[i]);
-                if(target == null || !players.contains(target.getName())) {continue;}
+                if(target == null || !players.contains(target.getName()) ||
+                        (inGame && players.contains(target.getName()) && players.size() == 2)) {continue;}
+                if (inGame && main.getConfig().getBoolean("scoreboard")) {
+                    objective.setDisplaySlot(null);
+                    target.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+                }
                 players.remove(target.getName());
                 count++;
             }
@@ -169,10 +209,10 @@ public class DeathSwapCommand implements CommandExecutor {
                 return true;
             }
             if(main.getConfig().getBoolean("timeSetDayOnStart")) {
-                p.getWorld().setTime(0);
+                p.getServer().getWorlds().get(0).setTime(0);
             }
             if(main.getConfig().getBoolean("weatherClearOnStart")) {
-                p.getWorld().setStorm(false);
+                p.getServer().getWorlds().get(0).setStorm(false);
             }
             for (String t : players) {
                 Player player = Bukkit.getPlayerExact(t);
