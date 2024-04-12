@@ -1,5 +1,5 @@
 name: MinecraftDeathSwap
-version: 1.1
+version: '${project.version}'
 main: me.matistan05.minecraftdeathswap.Main
 api-version: 1.16
 authors: [Matistan]
