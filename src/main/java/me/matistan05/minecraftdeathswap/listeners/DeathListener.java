@@ -20,18 +20,14 @@ public class DeathListener implements Listener {
     public void DeathEvent(PlayerDeathEvent e) {
         Player p = e.getEntity();
         if(inGame && players.contains(p.getName())) {
+            removePlayer(p.getName());
             playersMessage(ChatColor.DARK_RED + p.getName() + " died in " + round + " round" + (round == 1 ? "" : "s") + "!");
-            if(players.size() >= 3) {
-                playersMessage(ChatColor.DARK_RED + String.valueOf(players.size() - 1) + " players left!");
-                if(main.getConfig().getBoolean("takeAwayOps")) {
-                    p.setOp(ops.get(players.indexOf(p.getName())));
-                    ops.remove(players.indexOf(p.getName()));
-                }
+            if(players.size() >= 2) {
+                playersMessage(ChatColor.DARK_RED + String.valueOf(players.size()) + " players left!");
             } else {
-                playersMessage(ChatColor.DARK_AQUA + players.get(Math.abs(players.indexOf(p.getName()) - 1)) + " won!");
+                playersMessage(ChatColor.DARK_AQUA + players.get(0) + " won!");
                 reset();
             }
-            players.remove(p.getName());
         }
     }
 }

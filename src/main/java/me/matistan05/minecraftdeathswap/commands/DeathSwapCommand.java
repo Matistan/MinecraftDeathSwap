@@ -295,7 +295,7 @@ public class DeathSwapCommand implements CommandExecutor {
         return String.format("%02d:%02d", (time - (seconds % time)) / 60, (time - (seconds % time)) % 60);
     }
 
-    private void removePlayer(String name) {
+    public static void removePlayer(String name) {
         int index = players.indexOf(name);
         players.remove(index);
         if (inGame) {
