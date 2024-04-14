@@ -291,7 +291,7 @@ public class DeathSwapCommand implements CommandExecutor {
         return true;
     }
 
-    private Object timeLeft() {
+    private String timeLeft() {
         return String.format("%02d:%02d", (time - (seconds % time)) / 60, (time - (seconds % time)) % 60);
     }
 
