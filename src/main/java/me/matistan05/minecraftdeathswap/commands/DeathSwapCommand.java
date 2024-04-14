@@ -140,13 +140,8 @@ public class DeathSwapCommand implements CommandExecutor {
                     return true;
                 }
                 for(Player target : Bukkit.getOnlinePlayers()) {
-                    if(!players.contains(target.getName()) ||
-                            (inGame && players.contains(target.getName()) && players.size() == 2)) continue;
-                    if (inGame && main.getConfig().getBoolean("scoreboard")) {
-                        objective.setDisplaySlot(null);
-                        target.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-                    }
-                    players.remove(target.getName());
+                    if(!players.contains(target.getName()) || (inGame && players.size() == 2)) continue;
+                    removePlayer(target.getName());
                     count++;
                 }
                 if (count > 0) {
@@ -158,13 +153,8 @@ public class DeathSwapCommand implements CommandExecutor {
             }
             for(int i = 1; i < args.length; i++) {
                 Player target = Bukkit.getPlayerExact(args[i]);
-                if(target == null || !players.contains(target.getName()) ||
-                        (inGame && players.contains(target.getName()) && players.size() == 2)) {continue;}
-                if (inGame && main.getConfig().getBoolean("scoreboard")) {
-                    objective.setDisplaySlot(null);
-                    target.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-                }
-                players.remove(target.getName());
+                if(target == null || !players.contains(target.getName()) || (inGame && players.size() == 2)) {continue;}
+                removePlayer(target.getName());
                 count++;
             }
             if(count > 0) {
@@ -231,33 +221,10 @@ public class DeathSwapCommand implements CommandExecutor {
             }
             inGame = true;
             playersMessage(ChatColor.AQUA + "START!");
-            time = main.getConfig().getInt("time");
+            time = setTime();
             game = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if(main.getConfig().getBoolean("scoreboard")) {
-                        for(int i = 0; i < players.size(); i++) {
-                            Player player = Bukkit.getPlayerExact(players.get(i));
-                            if(player == null) {continue;}
-                                scoreboard = scoreboardManager.getNewScoreboard();
-                                objective = scoreboard.registerNewObjective("sb", "dummy", ChatColor.BLUE + "" + ChatColor.BOLD + "Death Swap");
-                                objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-                                Score timer = objective.getScore(ChatColor.YELLOW + "Time left: " + (time - (seconds % time)));
-                                Score score2;
-                                score2 = objective.getScore(ChatColor.BLUE + "Players left: " + players.size());
-                                Score score = objective.getScore(ChatColor.AQUA + "Round: " + round);
-                                timer.setScore(3);
-                                score2.setScore(2);
-                                score.setScore(1);
-                                player.setScoreboard(scoreboard);
-                        }
-                    }
-                    for(int i = 1; i <= 10; i++) {
-                        if((seconds + i) % time == 0) {
-                            playersTitle(i);
-                            break;
-                        }
-                    }
                     if(seconds % time == 0 && seconds != 0) {
                         while(true) {
                             for(int i = 0; i < players.size(); i++) {
@@ -289,6 +256,31 @@ public class DeathSwapCommand implements CommandExecutor {
                         round++;
                         teleport.clear();
                         location.clear();
+                        time = setTime();
+                        seconds = 0;
+                    }
+                    if(main.getConfig().getBoolean("scoreboard")) {
+                        for(int i = 0; i < players.size(); i++) {
+                            Player player = Bukkit.getPlayerExact(players.get(i));
+                            if(player == null) {continue;}
+                            scoreboard = scoreboardManager.getNewScoreboard();
+                            objective = scoreboard.registerNewObjective("sb", "dummy", ChatColor.BLUE + "" + ChatColor.BOLD + "Death Swap");
+                            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+                            Score timer = objective.getScore(ChatColor.YELLOW + "Time left: " + timeLeft());
+                            Score score2;
+                            score2 = objective.getScore(ChatColor.BLUE + "Players left: " + players.size());
+                            Score score = objective.getScore(ChatColor.AQUA + "Round: " + round);
+                            timer.setScore(3);
+                            score2.setScore(2);
+                            score.setScore(1);
+                            player.setScoreboard(scoreboard);
+                        }
+                    }
+                    for(int i = 1; i <= 10; i++) {
+                        if((seconds + i) % time == 0) {
+                            playersTitle(i);
+                            break;
+                        }
                     }
                     seconds += 1;
                 }
@@ -298,6 +290,37 @@ public class DeathSwapCommand implements CommandExecutor {
         p.sendMessage(ChatColor.RED + "Wrong argument. For help, type: /deathswap help");
         return true;
     }
+
+    private Object timeLeft() {
+        return String.format("%02d:%02d", (time - (seconds % time)) / 60, (time - (seconds % time)) % 60);
+    }
+
+    private void removePlayer(String name) {
+        int index = players.indexOf(name);
+        players.remove(index);
+        if (inGame) {
+            if (main.getConfig().getBoolean("takeAwayOps")) {
+                OfflinePlayer target = Bukkit.getOfflinePlayer(name);
+                target.setOp(ops.get(index));
+                ops.remove(index);
+            }
+            if (main.getConfig().getBoolean("scoreboard")) {
+                Player player = Bukkit.getPlayerExact(name);
+                if (player != null) {
+                    player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+                }
+            }
+        }
+    }
+
+    private int setTime() {
+        int time = Math.max(Math.min(main.getConfig().getInt("time"), 3600), 10);
+        int varyingTime = Math.max(Math.min(Math.min(main.getConfig().getInt("varyingTime"), 3600 - time), time - 10), 0);
+        time -= varyingTime;
+        time += new Random().nextInt(2 * varyingTime + 1);
+        return time;
+    }
+
     public static void reset() {
         if(inGame) {
             inGame = false;
