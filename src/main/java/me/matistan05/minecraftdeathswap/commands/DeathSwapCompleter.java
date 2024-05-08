@@ -1,5 +1,6 @@
 package me.matistan05.minecraftdeathswap.commands;
 
+import me.matistan05.minecraftdeathswap.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,10 +10,17 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static me.matistan05.minecraftdeathswap.commands.DeathSwapCommand.players;
 
 public class DeathSwapCompleter implements TabCompleter {
+
+    private static Main main;
+
+    public DeathSwapCompleter(Main main) {
+        DeathSwapCompleter.main = main;
+    }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         List<String> list = new ArrayList<>();
@@ -34,6 +42,20 @@ public class DeathSwapCompleter implements TabCompleter {
             }
             if(startsWith("help", args[0])) {
                 list.add("help");
+            }
+            if (startsWith("rules", args[0])) {
+                list.add("rules");
+            }
+        } else if (args.length > 1 && args[0].equals("rules")) {
+            if (args.length == 2) {
+                list = main.getConfig().getKeys(false).stream().filter(s -> startsWith(s, args[1])).collect(Collectors.toList());
+            } else if (args.length == 3 && main.getConfig().contains(args[1]) && !args[1].equals("time") && !args[1].equals("varyingTime")) {
+                if (startsWith("true", args[2])) {
+                    list.add("true");
+                }
+                if (startsWith("false", args[2])) {
+                    list.add("false");
+                }
             }
         } else if(args.length > 1 && (args[0].equals("add") || args[0].equals("remove"))) {
             if (args.length > 2 && args[1].equals("@a")) {

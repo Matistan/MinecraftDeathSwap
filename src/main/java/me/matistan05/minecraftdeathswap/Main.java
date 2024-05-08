@@ -14,7 +14,7 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         getServer().getPluginCommand("deathswap").setExecutor(new DeathSwapCommand(this));
-        getCommand("deathswap").setTabCompleter(new DeathSwapCompleter());
+        getCommand("deathswap").setTabCompleter(new DeathSwapCompleter(this));
         new DeathListener(this);
         new DamageListener(this);
         System.out.println("*********************************************************\n" +

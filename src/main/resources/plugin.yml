@@ -10,11 +10,12 @@ commands:
     usage: /<command>
 permissions:
   deathswap.deathswap:
-    description: Allows the player to use all /blockshuffle commands
+    description: Allows the player to use all /deathswap commands
     children:
       deathswap.add: true
       deathswap.remove: true
       deathswap.start: true
       deathswap.reset: true
       deathswap.list: true
+      deathswap.rules: true
       deathswap.help: true

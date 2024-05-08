@@ -37,16 +37,18 @@ Death Swap is a mini-game where after 5 minutes every player teleports to someon
 - `/deathswap start` - starts a game
 - `/deathswap reset` - resets a game
 - `/deathswap list` - shows a list of players in a death swap game
+- `/deathswap rules <rule> value(optional)` - changes some additional rules of the game (in config.yml)
 - `/deathswap help` - shows a list of death swap commands
 
 ## Configuration Options
 
-Edit the `plugins/MinecraftDeathSwap/config.yml` file to change the following options:
+Use the command `/deathswap rules` or edit the `plugins/MinecraftDeathSwap/config.yml` file to change the following options:
 
 | Key                 | Description                                                                                                       | Type    | recommended                                                   |
 |---------------------|-------------------------------------------------------------------------------------------------------------------|---------|---------------------------------------------------------------|
 | timeSetDayOnStart   | Set to true to set the time to day automatically when the game starts.                                            | boolean | true                                                          |
 | weatherClearOnStart | Set to true to set the weather to clear automatically when the game starts.                                       | boolean | true                                                          |
+| playWithEveryone    | Set to true to not have to use '/deathswap add' every time, and instead play with every player on the server      | boolean | true                                                          |
 | takeAwayOps         | Set to true to take away OPs for the duration of the game.                                                        | boolean | true                                                          |
 | clearInventories    | Set to true to clear players inventories when the game starts.                                                    | boolean | true                                                          |
 | time                | Set the time for a swap (10sec - 3600sec).                                                                        | int     | 300                                                           |
@@ -67,6 +69,7 @@ If `usePermissions` is set to `true` in the `config.yml` file, players without o
 | deathswap.start     | Allows the player to use the `/deathswap start` command.  |
 | deathswap.reset     | Allows the player to use the `/deathswap reset` command.  |
 | deathswap.list      | Allows the player to use the `/deathswap list` command.   |
+| deathswap.rules     | Allows the player to use the `/deathswap rules` command.  |
 | deathswap.help      | Allows the player to use the `/deathswap help` command.   |
 
 ### Bugs & Issues
