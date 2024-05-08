@@ -25,8 +25,8 @@ Death Swap is a mini-game where after 5 minutes every player teleports to someon
 ## How to use it
 
 - drag the .jar file from the [Release tab](https://github.com/Matistan/MinecraftDeathSwap/releases) to your plugins folder on your server.
-- select players to your game using `/deathswap add` command
 - type `/deathswap start` to start the match!
+- if you don't want to play with every player on the server, change the rule `playWithEveryone` to false, and choose the players using `/deathswap add` command
 
 ## Commands
 
