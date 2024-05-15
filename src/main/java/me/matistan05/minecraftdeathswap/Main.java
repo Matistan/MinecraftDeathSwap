@@ -17,6 +17,7 @@ public final class Main extends JavaPlugin {
         getCommand("deathswap").setTabCompleter(new DeathSwapCompleter(this));
         new DeathListener(this);
         new DamageListener(this);
+        new Metrics(this, 21889);
         System.out.println("*********************************************************\n" +
                 "Thank you for using this plugin! <3\n" +
                 "Author: Matistan\n" +
