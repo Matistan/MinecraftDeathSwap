@@ -26,4 +26,4 @@ pvpEnabled: false
 scoreboard: true
 # Set to true to enable permission checks.
 ## Note: This feature needs a permissions plugin (such as LuckPerms) to work.
-usePermissions: false
+usePermissions: true

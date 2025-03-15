@@ -44,18 +44,18 @@ Death Swap is a mini-game where after 5 minutes every player teleports to someon
 
 Use the command `/deathswap rules` or edit the `plugins/MinecraftDeathSwap/config.yml` file to change the following options:
 
-| Key                 | Description                                                                                                       | Type    | recommended                                                   |
-|---------------------|-------------------------------------------------------------------------------------------------------------------|---------|---------------------------------------------------------------|
-| timeSetDayOnStart   | Set to true to set the time to day automatically when the game starts.                                            | boolean | true                                                          |
-| weatherClearOnStart | Set to true to set the weather to clear automatically when the game starts.                                       | boolean | true                                                          |
-| playWithEveryone    | Set to true to not have to use '/deathswap add' every time, and instead play with every player on the server      | boolean | true                                                          |
-| takeAwayOps         | Set to true to take away OPs for the duration of the game.                                                        | boolean | true                                                          |
-| clearInventories    | Set to true to clear players inventories when the game starts.                                                    | boolean | true                                                          |
-| time                | Set the time for a swap (10sec - 3600sec).                                                                        | int     | 300                                                           |
-| varyingTime         | Set the maximum time that can be added or subtracted from the time (time must be always between 10sec - 3600sec). | int     | 0                                                             |
-| pvpEnabled          | Set to true to enable PvP during the match.                                                                       | boolean | false                                                         |
-| scoreboard          | Set to true to show scoreboard with the timer.                                                                    | boolean | true                                                          |
-| usePermissions      | Set to true to require users to have permission to use certain commands.                                          | boolean | false; true if you don't trust the people you're playing with |
+| Key                 | Description                                                                                                       | Type    | recommended                                             |
+|---------------------|-------------------------------------------------------------------------------------------------------------------|---------|---------------------------------------------------------|
+| timeSetDayOnStart   | Set to true to set the time to day automatically when the game starts.                                            | boolean | true                                                    |
+| weatherClearOnStart | Set to true to set the weather to clear automatically when the game starts.                                       | boolean | true                                                    |
+| playWithEveryone    | Set to true to not have to use '/deathswap add' every time, and instead play with every player on the server      | boolean | true                                                    |
+| takeAwayOps         | Set to true to take away OPs for the duration of the game.                                                        | boolean | true                                                    |
+| clearInventories    | Set to true to clear players inventories when the game starts.                                                    | boolean | true                                                    |
+| time                | Set the time for a swap (10sec - 3600sec).                                                                        | int     | 300                                                     |
+| varyingTime         | Set the maximum time that can be added or subtracted from the time (time must be always between 10sec - 3600sec). | int     | 0                                                       |
+| pvpEnabled          | Set to true to enable PvP during the match.                                                                       | boolean | false                                                   |
+| scoreboard          | Set to true to show scoreboard with the timer.                                                                    | boolean | true                                                    |
+| usePermissions      | Set to true to require users to have permission to use certain commands.                                          | boolean | true; false if you trust the people you're playing with |
 
 ## Permissions
 
